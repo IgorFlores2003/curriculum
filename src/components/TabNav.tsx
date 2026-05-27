@@ -38,7 +38,7 @@ export default function TabNav({ active, onChange }: TabNavProps) {
   return (
     <div className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <div className="flex">
+        <div className="flex overflow-x-auto no-scrollbar">
           {tabs.map((tab) => {
             const Icon = tab.Icon;
             return (
@@ -46,7 +46,7 @@ export default function TabNav({ active, onChange }: TabNavProps) {
                 key={tab.id}
                 id={`tab-${tab.id}`}
                 onClick={() => onChange(tab.id)}
-                className={`flex items-center gap-2.5 px-5 py-4 border-b-2 text-sm font-semibold transition-all relative ${
+                className={`flex items-center gap-2.5 px-4 sm:px-5 py-4 border-b-2 text-sm font-semibold transition-all flex-shrink-0 relative ${
                   active === tab.id
                     ? "border-brand-primary text-brand-primary"
                     : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
