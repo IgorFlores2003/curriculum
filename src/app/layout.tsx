@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Currículo com IA — Gerador Profissional",
+  title: "Orientação de Currículo — Univás Psicologia",
   description:
-    "Descreva suas experiências em linguagem natural e deixe a IA criar um currículo profissional em PDF para você. Gratuito, sem cadastro.",
+    "Ferramenta de orientação profissional e geração de currículos com IA para alunos universitários. Projeto de extensão Univás — Curso de Psicologia.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }

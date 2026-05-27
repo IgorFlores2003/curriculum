@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60">
+  <!-- Placeholder: substitua por logo da Psicologia real -->
+  <circle cx="30" cy="30" r="28" fill="none" stroke="#5B2D8E" stroke-width="2.5"/>
+  <text x="30" y="24" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#5B2D8E" text-anchor="middle">ψ</text>
+  <text x="30" y="45" font-family="Arial,sans-serif" font-size="6.5" fill="#5B2D8E" text-anchor="middle" letter-spacing="0.5">PSICOLOGIA</text>
+</svg>
