@@ -11,7 +11,7 @@ export interface PromptSection {
 export const promptsData: PromptSection[] = [
   {
     id: "01",
-    title: "01 Cabeçalho",
+    title: "Cabeçalho",
     description: "Organizar o cabeçalho do currículo de forma profissional e limpa.",
     fieldsToFill: [
       "Nome completo",
@@ -52,7 +52,7 @@ Pouso Alegre – MG | linkedin.com/in/joaopedro`
   },
   {
     id: "02",
-    title: "02 Objetivo",
+    title: "Objetivo",
     description: "Criar o objetivo profissional de forma clara e direta.",
     fieldsToFill: [
       "Área de interesse",
