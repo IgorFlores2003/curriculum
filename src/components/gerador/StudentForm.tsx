@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Loader2, Sparkles } from "lucide-react";
 import { getLastInput, saveLastInput } from "@/lib/storage";
 
@@ -28,7 +28,11 @@ Extras: Membro da Liga Acadêmica de Saúde Mental, voluntária no projeto de ex
 
 export default function StudentForm({ onSubmit, loading }: StudentFormProps) {
   const [mode, setMode] = useState<"livre" | "estruturado">("livre");
-  const [text, setText] = useState(getLastInput);
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    setText(getLastInput());
+  }, []);
 
   // Campos estruturados
   const [nome, setNome] = useState("");

@@ -6,41 +6,23 @@ export default function Header() {
       <div className="w-full px-6 sm:px-8 py-3">
         <div className="flex items-center justify-between gap-4">
 
-          {/* Logo Univás */}
+          {/* Logo Psicologia */}
           <div className="flex items-center gap-3">
-            <div className="relative h-9 w-32 sm:h-12 sm:w-44 flex-shrink-0 rounded-lg overflow-hidden opacity-90">
-              <Image
-                src="/logo-univas.jpg"
-                alt="Logo Univás"
-                fill
-                className="object-cover object-center"
-              />
-            </div>
+            <img
+              src="/psicologo-logo.jpg"
+              alt="Logo Psicologia"
+              className="h-10 sm:h-14 w-auto rounded-xl shadow-sm"
+            />
           </div>
 
           {/* Título central */}
           <div className="flex-1 text-center hidden sm:block">
-            <p className="text-white/90 text-xs font-semibold tracking-widest uppercase">
-              Projeto de Extensão
+            <p className="text-white text-2xl font-black tracking-widest mb-1">
+              VitaeLab
             </p>
             <h1 className="text-white font-bold text-sm leading-tight">
-              Orientação Profissional & Geração de Currículos
+              Inteligência para construir currículos mais estratégicos
             </h1>
-          </div>
-
-          {/* Logo Psicologia */}
-          <div className="flex items-center gap-3 justify-end">
-            <div className="relative h-10 w-10 flex-shrink-0">
-              <Image
-                src="/logo-psicologia.svg"
-                alt="Logo Psicologia"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <span className="text-white/70 text-xs font-semibold hidden md:block leading-tight text-right">
-              Curso de<br/>Psicologia
-            </span>
           </div>
         </div>
 

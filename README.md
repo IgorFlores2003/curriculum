@@ -1,15 +1,15 @@
-# 🎯 Gerador de Currículo com IA
+# Gerador de Currículo com IA
 
 Crie currículos profissionais em PDF usando linguagem natural + Google Gemini AI.
 
-## ✨ Funcionalidades
+## Funcionalidades
 
 - **IA Gratuita**: Usa o Google Gemini 2.0 Flash (sem custo)
 - **Sem banco de dados**: Tudo salvo em `sessionStorage`
 - **PDF profissional**: Layout two-column gerado no navegador
 - **Pronto para Vercel**: Deploy com zero configuração
 
-## 🚀 Como rodar
+## Como rodar
 
 ```bash
 npm install
@@ -18,7 +18,7 @@ npm run dev
 
 Abra [http://localhost:3000](http://localhost:3000).
 
-## 🔑 Obtendo a chave da API (gratuita)
+## Obtendo a chave da API (gratuita)
 
 1. Acesse [Google AI Studio](https://aistudio.google.com/app/apikey)
 2. Faça login com sua conta Google
@@ -27,7 +27,7 @@ Abra [http://localhost:3000](http://localhost:3000).
 
 **A chave fica apenas no seu navegador (sessionStorage) — nunca vai para nenhum servidor.**
 
-## 🌐 Deploy na Vercel
+## Deploy na Vercel
 
 ```bash
 npx vercel
@@ -35,7 +35,7 @@ npx vercel
 
 Ou conecte o repositório GitHub diretamente na Vercel.
 
-## 🛠 Stack
+## Stack
 
 - **Next.js 15** (App Router)
 - **TypeScript**
