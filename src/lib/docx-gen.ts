@@ -17,8 +17,8 @@ const FONT = "Arial";
 
 function hr(): Paragraph {
   return new Paragraph({
-    borders: {
-      bottom: { color: BLACK, size: 2, style: BorderStyle.SINGLE },
+    border: {
+      bottom: { color: BLACK, size: 2, space: 1, style: BorderStyle.SINGLE },
     },
     spacing: { after: 120 },
   });

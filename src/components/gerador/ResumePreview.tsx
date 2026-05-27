@@ -197,7 +197,7 @@ export default function ResumePreview({ resume, onChange }: ResumePreviewProps) 
           )}
 
           {/* Skills + Idiomas combinados */}
-          {(resume.skills?.length > 0 || resume.languages?.length > 0) && (
+          {((resume.skills?.length ?? 0) > 0 || (resume.languages?.length ?? 0) > 0) && (
             <div>
               <h3 className="text-xs font-bold uppercase tracking-widest text-brand-primary mb-2 pb-1 border-b border-brand-primary/20">
                 Competências e Habilidades
@@ -221,13 +221,13 @@ export default function ResumePreview({ resume, onChange }: ResumePreviewProps) 
           )}
 
           {/* Extras */}
-          {resume.extras?.length > 0 && (
+          {(resume.extras?.length ?? 0) > 0 && (
             <div>
               <h3 className="text-xs font-bold uppercase tracking-widest text-brand-primary mb-2 pb-1 border-b border-brand-primary/20">
                 Informações Complementares
               </h3>
               <div className="space-y-1">
-                {resume.extras.map((e, i) => (
+                {resume.extras?.map((e, i) => (
                   <div key={i} className="flex gap-2 items-start">
                     <span className="text-brand-primary flex-shrink-0 mt-0.5 text-xs font-bold">•</span>
                     <EditableField value={e} onChange={(v) => updateExtra(i, v)}
@@ -239,13 +239,13 @@ export default function ResumePreview({ resume, onChange }: ResumePreviewProps) 
           )}
 
           {/* Cursos */}
-          {resume.courses?.length > 0 && (
+          {(resume.courses?.length ?? 0) > 0 && (
             <div>
               <h3 className="text-xs font-bold uppercase tracking-widest text-brand-primary mb-2 pb-1 border-b border-brand-primary/20">
                 Cursos Complementares
               </h3>
               <div className="space-y-1">
-                {resume.courses.map((c, i) => (
+                {resume.courses?.map((c, i) => (
                   <div key={i} className="flex gap-2 items-start">
                     <span className="text-brand-primary flex-shrink-0 mt-0.5 text-xs font-bold">•</span>
                     <EditableField value={c} onChange={(v) => updateCourse(i, v)}

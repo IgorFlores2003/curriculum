@@ -4,8 +4,9 @@ import { useState } from "react";
 import TabNav from "@/components/TabNav";
 import OrientacaoPage from "@/components/orientacao/OrientacaoPage";
 import GeradorPage from "@/components/gerador/GeradorPage";
+import CompetenciasPage from "@/components/competencias/CompetenciasPage";
 
-type Tab = "orientacao" | "gerador";
+type Tab = "orientacao" | "gerador" | "competencias";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("orientacao");
@@ -16,6 +17,7 @@ export default function Home() {
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
         {activeTab === "orientacao" && <OrientacaoPage />}
         {activeTab === "gerador" && <GeradorPage />}
+        {activeTab === "competencias" && <CompetenciasPage />}
       </main>
 
       <footer className="border-t border-slate-200 bg-white mt-12">

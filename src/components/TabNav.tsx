@@ -1,6 +1,6 @@
-import { Compass, Sparkles } from "lucide-react";
+import { Compass, Sparkles, ListChecks } from "lucide-react";
 
-type Tab = "orientacao" | "gerador";
+type Tab = "orientacao" | "gerador" | "competencias";
 
 interface TabNavProps {
   active: Tab;
@@ -20,6 +20,12 @@ export default function TabNav({ active, onChange }: TabNavProps) {
       label: "Gerador com IA",
       Icon: Sparkles,
       desc: "Criar currículo com inteligência artificial",
+    },
+    {
+      id: "competencias" as Tab,
+      label: "Competências",
+      Icon: ListChecks,
+      desc: "Mapeamento de hard e soft skills",
     },
   ];
 
