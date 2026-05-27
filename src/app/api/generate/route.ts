@@ -14,7 +14,7 @@ seguindo exatamente esta estrutura:
     "location": "Cidade, Estado",
     "linkedin": "linkedin.com/in/usuario",
     "github": "github.com/usuario",
-    "age": "21 anos"
+    "birthDate": "13/05/2003"
   },
   "summary": "Resumo profissional impactante em 2-3 frases",
   "experience": [

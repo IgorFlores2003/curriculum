@@ -10,7 +10,7 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <div className="relative h-10 w-36 flex-shrink-0">
               <Image
-                src="/logo-univas.svg"
+                src="/logo-univas.jpg"
                 alt="Logo Univás"
                 fill
                 className="object-contain object-left"

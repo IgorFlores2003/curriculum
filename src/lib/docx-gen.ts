@@ -17,29 +17,37 @@ const FONT = "Arial";
 
 function hr(): Paragraph {
   return new Paragraph({
-    border: {
-      bottom: { color: BLACK, size: 2, style: BorderStyle.SINGLE },
-    },
+    children: [
+      new TextRun({
+        text: "____________________________________________________________________________________",
+        color: BLACK,
+        size: 16,
+      }),
+    ],
+    alignment: AlignmentType.CENTER,
     spacing: { after: 120 },
   });
 }
 
-function sectionTitle(text: string): Paragraph {
-  return new Paragraph({
-    children: [
-      new TextRun({
-        text: text,
-        bold: true,
-        color: BLACK,
-        size: 28, // 14pt
-        font: FONT,
-      }),
-    ],
-    spacing: { before: 240, after: 120 },
-  });
+function sectionTitle(text: string): Paragraph[] {
+  return [
+    new Paragraph({ text: "", spacing: { after: 60 } }), // Linha em branco para garantir espaço no Apple Pages
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: text,
+          bold: true,
+          color: BLACK,
+          size: 28, // 14pt
+          font: FONT,
+        }),
+      ],
+      spacing: { before: 0, after: 120 },
+    })
+  ];
 }
 
-function bulletLine(text: string, isLast: boolean): Paragraph {
+function bulletLine(text: string, isLast: boolean, spacingAfter: number = 0): Paragraph {
   let processedText = text.trim();
   if (processedText.endsWith(";") || processedText.endsWith(".")) {
     processedText = processedText.slice(0, -1);
@@ -52,7 +60,7 @@ function bulletLine(text: string, isLast: boolean): Paragraph {
       new TextRun({ text: processedText, color: BLACK, font: FONT, size: 24 }),
     ],
     alignment: AlignmentType.JUSTIFIED,
-    spacing: { before: 0, after: 0 }, // Sem espaço entre tópicos
+    spacing: { before: 0, after: spacingAfter }, // Usa o parâmetro em vez de 0 hardcoded
     indent: { left: convertInchesToTwip(0.25), hanging: convertInchesToTwip(0.25) },
   });
 }
@@ -85,7 +93,7 @@ export async function generateResumeDocx(resume: ResumeData): Promise<void> {
     { label: "E-mail:", value: resume.contact?.email },
     { label: "Telefone:", value: resume.contact?.phone },
     { label: "Endereço:", value: resume.contact?.location },
-    { label: "Idade:", value: resume.contact?.age },
+    { label: "Data de Nascimento:", value: resume.contact?.birthDate },
     { label: "LinkedIn:", value: resume.contact?.linkedin },
   ];
 
@@ -116,19 +124,14 @@ export async function generateResumeDocx(resume: ResumeData): Promise<void> {
   }
 
   // Linha após contatos
-  children.push(
-    new Paragraph({
-      border: { bottom: { color: BLACK, size: 2, style: BorderStyle.SINGLE } },
-      spacing: { before: 20, after: 120 },
-    })
-  );
+  children.push(hr());
 
   // Helper para os novos títulos
   const secTitle = (t: string) => sectionTitle(t.toUpperCase() + ":");
 
   // ── OBJETIVO ───────────────────────────────────────────
   if (resume.summary) {
-    children.push(secTitle("Objetivo"));
+    children.push(...secTitle("Objetivo"));
     children.push(
       new Paragraph({
         children: [
@@ -147,8 +150,9 @@ export async function generateResumeDocx(resume: ResumeData): Promise<void> {
 
   // ── FORMAÇÃO ACADÊMICA ──────────────────────────────────────────────────────
   if (resume.education?.length) {
-    children.push(secTitle("Formação Acadêmica"));
-    for (const edu of resume.education) {
+    children.push(...secTitle("Formação Acadêmica"));
+    for (let i = 0; i < resume.education.length; i++) {
+      const edu = resume.education[i];
       children.push(
         new Paragraph({
           children: [
@@ -162,7 +166,7 @@ export async function generateResumeDocx(resume: ResumeData): Promise<void> {
           children: [
             new TextRun({ text: `${edu.institution} | ${edu.period}`, color: BLACK, size: 24, font: FONT }),
           ],
-          spacing: { after: 0 },
+          spacing: { after: i === resume.education.length - 1 ? 120 : 0 },
         })
       );
     }
@@ -170,28 +174,44 @@ export async function generateResumeDocx(resume: ResumeData): Promise<void> {
 
   // ── EXPERIÊNCIA PROFISSIONAL ───────────────────────────────────────────────────
   if (resume.experience?.length) {
-    children.push(secTitle("Experiência Profissional"));
-    for (const exp of resume.experience) {
+    children.push(...secTitle("Experiência Profissional"));
+    for (let eIndex = 0; eIndex < resume.experience.length; eIndex++) {
+      const exp = resume.experience[eIndex];
       children.push(
+        // Empresa (Negrito)
         new Paragraph({
           children: [
-            new TextRun({ text: exp.role || "Cargo", bold: true, color: BLACK, size: 24, font: FONT }),
-            new TextRun({ text: ` - ${exp.company} (${exp.period})`, color: BLACK, size: 24, font: FONT }),
+            new TextRun({ text: exp.company || "Empresa", bold: true, color: BLACK, size: 24, font: FONT }),
           ],
-          spacing: { before: 120, after: 60 },
+          spacing: { before: 120, after: 0 },
+        }),
+        // Cargo (Normal)
+        new Paragraph({
+          children: [
+            new TextRun({ text: exp.role || "Cargo", color: BLACK, size: 24, font: FONT }),
+          ],
+          spacing: { before: 40, after: 0 },
+        }),
+        // Período (Normal)
+        new Paragraph({
+          children: [
+            new TextRun({ text: exp.period || "Período", color: BLACK, size: 24, font: FONT }),
+          ],
+          spacing: { before: 40, after: 60 },
         })
       );
       
       const descs = exp.description || [];
       for (let i = 0; i < descs.length; i++) {
-        children.push(bulletLine(descs[i], i === descs.length - 1));
+        const isVeryLastExp = eIndex === resume.experience.length - 1 && i === descs.length - 1;
+        children.push(bulletLine(descs[i], i === descs.length - 1, isVeryLastExp ? 120 : 0));
       }
     }
   }
 
   // ── COMPETÊNCIAS E HABILIDADES ───────────────────────────────────────────────────
   if (resume.skills?.length || resume.languages?.length) {
-    children.push(secTitle("Competências e Habilidades"));
+    children.push(...secTitle("Competências e Habilidades"));
     
     const allSkills = [...(resume.skills || [])];
     if (resume.languages?.length) {
@@ -202,56 +222,26 @@ export async function generateResumeDocx(resume: ResumeData): Promise<void> {
 
     for (let i = 0; i < allSkills.length; i++) {
       const isLast = i === allSkills.length - 1;
-      const text = allSkills[i].trim() + (isLast ? "." : ";");
-      children.push(
-        new Paragraph({
-          children: [
-            new TextRun({ text, color: BLACK, size: 24, font: FONT }),
-          ],
-          alignment: AlignmentType.JUSTIFIED,
-          spacing: { before: 40, after: 40 },
-        })
-      );
+      children.push(bulletLine(allSkills[i], isLast, isLast ? 120 : 0));
     }
-    children[children.length - 1].options.spacing = { before: 40, after: 120 };
   }
 
   // ── INFORMAÇÕES COMPLEMENTARES ───────────────────────────────────────────────────────
   if (resume.extras?.length) {
-    children.push(secTitle("Informações Complementares"));
+    children.push(...secTitle("Informações Complementares"));
     for (let i = 0; i < resume.extras.length; i++) {
       const isLast = i === resume.extras.length - 1;
-      const text = resume.extras[i].trim() + (isLast ? "." : ";");
-      children.push(
-        new Paragraph({
-          children: [
-            new TextRun({ text, color: BLACK, size: 24, font: FONT }),
-          ],
-          alignment: AlignmentType.JUSTIFIED,
-          spacing: { before: 40, after: 40 },
-        })
-      );
+      children.push(bulletLine(resume.extras[i], isLast, isLast ? 120 : 0));
     }
-    children[children.length - 1].options.spacing = { before: 40, after: 120 };
   }
 
   // ── CURSOS COMPLEMENTARES ───────────────────────────────────────────────────────
   if (resume.courses?.length) {
-    children.push(secTitle("Cursos Complementares"));
+    children.push(...secTitle("Cursos Complementares"));
     for (let i = 0; i < resume.courses.length; i++) {
       const isLast = i === resume.courses.length - 1;
-      const text = resume.courses[i].trim() + (isLast ? "." : ";");
-      children.push(
-        new Paragraph({
-          children: [
-            new TextRun({ text, color: BLACK, size: 24, font: FONT }),
-          ],
-          alignment: AlignmentType.JUSTIFIED,
-          spacing: { before: 40, after: 40 },
-        })
-      );
+      children.push(bulletLine(resume.courses[i], isLast, isLast ? 120 : 0));
     }
-    children[children.length - 1].options.spacing = { before: 40, after: 120 };
   }
 
   // ── Montar documento ──────────────────────────────────────────────

@@ -7,7 +7,7 @@ export interface ResumeData {
     location?: string;
     linkedin?: string;
     github?: string;
-    age?: string;
+    birthDate?: string;
   };
   summary: string;
   experience: {

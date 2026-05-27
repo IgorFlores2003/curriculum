@@ -89,7 +89,7 @@ export function generateResumePDF(resume: ResumeData): void {
     { label: "E-mail:", value: resume.contact?.email },
     { label: "Telefone:", value: resume.contact?.phone },
     { label: "Endereço:", value: resume.contact?.location },
-    { label: "Idade:", value: resume.contact?.age },
+    { label: "Data de Nascimento:", value: resume.contact?.birthDate },
     { label: "LinkedIn:", value: resume.contact?.linkedin }
   ];
 
@@ -115,7 +115,7 @@ export function generateResumePDF(resume: ResumeData): void {
   // Linha após contatos
   const lineY = y - 2; // Subimos um pouco para ficar simétrico à distância superior
   doc.line(MARGIN_X, lineY, PAGE_W - MARGIN_X, lineY);
-  y += 6; // Espaço após o cabeçalho
+  y += 12; // Aumentado o espaço antes da seção OBJETIVO
 
   // Helper para títulos de seção (ARIAL 14, NEGRITO)
   const drawSectionTitle = (title: string) => {
@@ -123,7 +123,7 @@ export function generateResumePDF(resume: ResumeData): void {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(14);
     doc.text(title.toUpperCase() + ":", MARGIN_X, y);
-    y += 6;
+    y += 8;
   };
 
   // 3. OBJETIVO (Justificado, Arial 12)
@@ -139,7 +139,8 @@ export function generateResumePDF(resume: ResumeData): void {
   if (resume.education?.length) {
     drawSectionTitle("Formação Acadêmica");
     
-    for (const edu of resume.education) {
+    for (let i = 0; i < resume.education.length; i++) {
+      const edu = resume.education[i];
       y = checkPageBreak(doc, y, 10);
       
       doc.setFont("helvetica", "bold");
@@ -149,7 +150,12 @@ export function generateResumePDF(resume: ResumeData): void {
       
       doc.setFont("helvetica", "normal");
       doc.text(`${edu.institution} | ${edu.period}`, MARGIN_X, y);
-      y += 8;
+      
+      if (i < resume.education.length - 1) {
+        y += 8; // Espaço entre formações
+      } else {
+        y += 14; // Espaço de fim de seção para equiparar ao justifyText (6 + 8)
+      }
     }
   }
 
@@ -162,13 +168,17 @@ export function generateResumePDF(resume: ResumeData): void {
       
       doc.setFont("helvetica", "bold");
       doc.setFontSize(12);
-      // Cargo
-      doc.text(exp.role || "Cargo", MARGIN_X, y);
+      // Empresa (Negrito)
+      doc.text(exp.company || "Empresa", MARGIN_X, y);
+      y += 6;
       
-      // Empresa e Período (Alinhado à direita ou mesma linha)
+      // Cargo (Normal)
       doc.setFont("helvetica", "normal");
-      const detailsText = ` - ${exp.company} (${exp.period})`;
-      doc.text(detailsText, MARGIN_X + doc.getTextWidth(exp.role || "Cargo"), y);
+      doc.text(exp.role || "Cargo", MARGIN_X, y);
+      y += 6;
+
+      // Período (Normal)
+      doc.text(exp.period || "Período", MARGIN_X, y);
       y += 6;
 
       // Descrições (Bullets)
@@ -209,11 +219,17 @@ export function generateResumePDF(resume: ResumeData): void {
     }
 
     for (let i = 0; i < allSkills.length; i++) {
-      y = checkPageBreak(doc, y, 6);
       const isLast = i === allSkills.length - 1;
-      const text = allSkills[i].trim() + (isLast ? "." : ";");
-      doc.text(text, MARGIN_X, y);
-      y += 6;
+      let text = allSkills[i].trim();
+      if (text.endsWith(".") || text.endsWith(";")) text = text.slice(0, -1);
+      text += isLast ? "." : ";";
+      
+      const textX = MARGIN_X + 5;
+      const textW = CONTENT_W - 5;
+      
+      y = checkPageBreak(doc, y, 6);
+      doc.text("• ", MARGIN_X, y);
+      y = justifyText(doc, text, textX, y, textW, 6);
     }
     y += 4;
   }
@@ -225,11 +241,17 @@ export function generateResumePDF(resume: ResumeData): void {
     doc.setFontSize(12);
     
     for (let i = 0; i < resume.extras.length; i++) {
-      y = checkPageBreak(doc, y, 6);
       const isLast = i === resume.extras.length - 1;
-      const text = resume.extras[i].trim() + (isLast ? "." : ";");
-      doc.text(text, MARGIN_X, y);
-      y += 6;
+      let text = resume.extras[i].trim();
+      if (text.endsWith(".") || text.endsWith(";")) text = text.slice(0, -1);
+      text += isLast ? "." : ";";
+      
+      const textX = MARGIN_X + 5;
+      const textW = CONTENT_W - 5;
+      
+      y = checkPageBreak(doc, y, 6);
+      doc.text("• ", MARGIN_X, y);
+      y = justifyText(doc, text, textX, y, textW, 6);
     }
     y += 4;
   }
@@ -241,11 +263,17 @@ export function generateResumePDF(resume: ResumeData): void {
     doc.setFontSize(12);
     
     for (let i = 0; i < resume.courses.length; i++) {
-      y = checkPageBreak(doc, y, 6);
       const isLast = i === resume.courses.length - 1;
-      const text = resume.courses[i].trim() + (isLast ? "." : ";");
-      doc.text(text, MARGIN_X, y);
-      y += 6;
+      let text = resume.courses[i].trim();
+      if (text.endsWith(".") || text.endsWith(";")) text = text.slice(0, -1);
+      text += isLast ? "." : ";";
+      
+      const textX = MARGIN_X + 5;
+      const textW = CONTENT_W - 5;
+      
+      y = checkPageBreak(doc, y, 6);
+      doc.text("• ", MARGIN_X, y);
+      y = justifyText(doc, text, textX, y, textW, 6);
     }
     y += 4;
   }
