@@ -13,45 +13,30 @@ function justifyText(
   x: number,
   y: number,
   maxWidth: number,
-  lineHeight: number
+  lineHeight: number,
+  align: "left" | "center" = "left"
 ): number {
-  const words = text.split(" ");
-  let currentLine = "";
-  let currentY = y;
-
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
-    const testLine = currentLine + word + " ";
-    const testWidth = doc.getTextWidth(testLine);
-
-    if (testWidth > maxWidth && i > 0) {
-      // Draw justified line
-      const lineWords = currentLine.trim().split(" ");
-      if (lineWords.length > 1) {
-        const textWidth = doc.getTextWidth(currentLine.trim());
-        const spaceToAdd = (maxWidth - textWidth) / (lineWords.length - 1);
-        let currentX = x;
-        for (let j = 0; j < lineWords.length; j++) {
-          doc.text(lineWords[j], currentX, currentY);
-          currentX += doc.getTextWidth(lineWords[j]) + spaceToAdd + doc.getTextWidth(" ");
-        }
-      } else {
-        doc.text(currentLine.trim(), x, currentY);
-      }
-      currentLine = word + " ";
-      currentY += lineHeight;
-    } else {
-      currentLine = testLine;
+  if (align === "center") {
+    const lines = doc.splitTextToSize(text, maxWidth);
+    for (let i = 0; i < lines.length; i++) {
+      const w = doc.getTextWidth(lines[i]);
+      doc.text(lines[i], x + (maxWidth - w) / 2, y);
+      y += lineHeight;
     }
+    return y;
   }
 
-  if (currentLine.trim().length > 0) {
-    // Last line shouldn't be justified
-    doc.text(currentLine.trim(), x, currentY);
-    currentY += lineHeight;
+  const lines = doc.splitTextToSize(text, maxWidth);
+  for (let i = 0; i < lines.length; i++) {
+    if (i === lines.length - 1 || lines.length === 1) {
+      doc.text(lines[i], x, y);
+    } else {
+      doc.text(lines[i], x, y, { maxWidth: maxWidth, align: "justify" });
+    }
+    y += lineHeight;
   }
 
-  return currentY;
+  return y;
 }
 
 function checkPageBreak(doc: jsPDF, currentY: number, heightNeeded: number): number {
@@ -132,7 +117,7 @@ export function generateResumePDF(resume: ResumeData): void {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
     y = justifyText(doc, resume.summary, MARGIN_X, y, CONTENT_W, 6);
-    y += 8; // Espaço entre conteúdos
+    y += 6; // Espaço padrão de fim de seção
   }
 
   // 4. FORMAÇÃO ACADÊMICA
@@ -150,20 +135,21 @@ export function generateResumePDF(resume: ResumeData): void {
       
       doc.setFont("helvetica", "normal");
       doc.text(`${edu.institution} | ${edu.period}`, MARGIN_X, y);
+      y += 6;
       
       if (i < resume.education.length - 1) {
-        y += 8; // Espaço entre formações
-      } else {
-        y += 14; // Espaço de fim de seção para equiparar ao justifyText (6 + 8)
+        y += 4; // Espaço menor entre itens da mesma seção
       }
     }
+    y += 6; // Espaço padrão de fim de seção
   }
 
   // 5. EXPERIÊNCIA PROFISSIONAL
   if (resume.experience?.length) {
     drawSectionTitle("Experiência Profissional");
     
-    for (const exp of resume.experience) {
+    for (let eIdx = 0; eIdx < resume.experience.length; eIdx++) {
+      const exp = resume.experience[eIdx];
       y = checkPageBreak(doc, y, 15);
       
       doc.setFont("helvetica", "bold");
@@ -201,8 +187,12 @@ export function generateResumePDF(resume: ResumeData): void {
           y = justifyText(doc, descText, textX, y, textW, 6);
         }
       }
-      y += 8;
+      
+      if (eIdx < resume.experience.length - 1) {
+        y += 4; // Espaço menor entre experiências
+      }
     }
+    y += 6; // Espaço padrão de fim de seção
   }
 
   // 6. COMPETÊNCIAS E HABILIDADES
@@ -231,7 +221,7 @@ export function generateResumePDF(resume: ResumeData): void {
       doc.text("• ", MARGIN_X, y);
       y = justifyText(doc, text, textX, y, textW, 6);
     }
-    y += 4;
+    y += 6; // Espaço padrão de fim de seção
   }
 
   // 7. INFORMAÇÕES COMPLEMENTARES
@@ -253,7 +243,7 @@ export function generateResumePDF(resume: ResumeData): void {
       doc.text("• ", MARGIN_X, y);
       y = justifyText(doc, text, textX, y, textW, 6);
     }
-    y += 4;
+    y += 6; // Espaço padrão de fim de seção
   }
 
   // 8. CURSOS COMPLEMENTARES
@@ -275,7 +265,7 @@ export function generateResumePDF(resume: ResumeData): void {
       doc.text("• ", MARGIN_X, y);
       y = justifyText(doc, text, textX, y, textW, 6);
     }
-    y += 4;
+    y += 6; // Espaço padrão de fim de seção
   }
 
   const filename = `curriculo-${(resume.name || "profissional")

@@ -17,34 +17,26 @@ const FONT = "Arial";
 
 function hr(): Paragraph {
   return new Paragraph({
-    children: [
-      new TextRun({
-        text: "____________________________________________________________________________________",
-        color: BLACK,
-        size: 16,
-      }),
-    ],
-    alignment: AlignmentType.CENTER,
+    borders: {
+      bottom: { color: BLACK, size: 2, style: BorderStyle.SINGLE },
+    },
     spacing: { after: 120 },
   });
 }
 
-function sectionTitle(text: string): Paragraph[] {
-  return [
-    new Paragraph({ text: "", spacing: { after: 60 } }), // Linha em branco para garantir espaço no Apple Pages
-    new Paragraph({
-      children: [
-        new TextRun({
-          text: text,
-          bold: true,
-          color: BLACK,
-          size: 28, // 14pt
-          font: FONT,
-        }),
-      ],
-      spacing: { before: 0, after: 120 },
-    })
-  ];
+function sectionTitle(text: string): Paragraph {
+  return new Paragraph({
+    children: [
+      new TextRun({
+        text: text,
+        bold: true,
+        color: BLACK,
+        size: 28, // 14pt
+        font: FONT,
+      }),
+    ],
+    spacing: { before: 240, after: 120 },
+  });
 }
 
 function bulletLine(text: string, isLast: boolean, spacingAfter: number = 0): Paragraph {
@@ -131,7 +123,7 @@ export async function generateResumeDocx(resume: ResumeData): Promise<void> {
 
   // ── OBJETIVO ───────────────────────────────────────────
   if (resume.summary) {
-    children.push(...secTitle("Objetivo"));
+    children.push(secTitle("Objetivo"));
     children.push(
       new Paragraph({
         children: [
@@ -150,7 +142,7 @@ export async function generateResumeDocx(resume: ResumeData): Promise<void> {
 
   // ── FORMAÇÃO ACADÊMICA ──────────────────────────────────────────────────────
   if (resume.education?.length) {
-    children.push(...secTitle("Formação Acadêmica"));
+    children.push(secTitle("Formação Acadêmica"));
     for (let i = 0; i < resume.education.length; i++) {
       const edu = resume.education[i];
       children.push(
@@ -174,7 +166,7 @@ export async function generateResumeDocx(resume: ResumeData): Promise<void> {
 
   // ── EXPERIÊNCIA PROFISSIONAL ───────────────────────────────────────────────────
   if (resume.experience?.length) {
-    children.push(...secTitle("Experiência Profissional"));
+    children.push(secTitle("Experiência Profissional"));
     for (let eIndex = 0; eIndex < resume.experience.length; eIndex++) {
       const exp = resume.experience[eIndex];
       children.push(
@@ -211,7 +203,7 @@ export async function generateResumeDocx(resume: ResumeData): Promise<void> {
 
   // ── COMPETÊNCIAS E HABILIDADES ───────────────────────────────────────────────────
   if (resume.skills?.length || resume.languages?.length) {
-    children.push(...secTitle("Competências e Habilidades"));
+    children.push(secTitle("Competências e Habilidades"));
     
     const allSkills = [...(resume.skills || [])];
     if (resume.languages?.length) {
@@ -228,7 +220,7 @@ export async function generateResumeDocx(resume: ResumeData): Promise<void> {
 
   // ── INFORMAÇÕES COMPLEMENTARES ───────────────────────────────────────────────────────
   if (resume.extras?.length) {
-    children.push(...secTitle("Informações Complementares"));
+    children.push(secTitle("Informações Complementares"));
     for (let i = 0; i < resume.extras.length; i++) {
       const isLast = i === resume.extras.length - 1;
       children.push(bulletLine(resume.extras[i], isLast, isLast ? 120 : 0));
@@ -237,7 +229,7 @@ export async function generateResumeDocx(resume: ResumeData): Promise<void> {
 
   // ── CURSOS COMPLEMENTARES ───────────────────────────────────────────────────────
   if (resume.courses?.length) {
-    children.push(...secTitle("Cursos Complementares"));
+    children.push(secTitle("Cursos Complementares"));
     for (let i = 0; i < resume.courses.length; i++) {
       const isLast = i === resume.courses.length - 1;
       children.push(bulletLine(resume.courses[i], isLast, isLast ? 120 : 0));

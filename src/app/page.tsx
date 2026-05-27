@@ -18,9 +18,8 @@ export default function Home() {
         {activeTab === "gerador" && <GeradorPage />}
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-slate-200 bg-white mt-12">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between flex-wrap gap-3">
+        <div className="w-full px-6 sm:px-8 py-6 flex items-center justify-between flex-wrap gap-3">
           <div>
             <p className="text-sm font-semibold text-slate-700">
               Projeto de Extensão — Univás

@@ -110,7 +110,7 @@ export default function StudentForm({ onSubmit, loading }: StudentFormProps) {
       {mode === "livre" && (
         <div className="animate-fade-in">
           <div className="flex items-center justify-between mb-2">
-            <label className={labelClass}>Informações do aluno</label>
+            <label className={labelClass}>Informações</label>
             <button
               onClick={() => setText(EXAMPLE)}
               className="text-xs text-brand-primary hover:text-brand-dark font-medium transition-colors"
@@ -121,7 +121,7 @@ export default function StudentForm({ onSubmit, loading }: StudentFormProps) {
           <textarea
             id="student-info-textarea"
             className={`${textareaClass} min-h-[280px] font-mono text-xs`}
-            placeholder={`Cole aqui as informações do aluno como elas vieram — pode ser texto bagunçado, mensagem de WhatsApp, lista sem formatação...\n\nExemplo:\n${EXAMPLE}`}
+            placeholder={`Cole aqui as informações como elas vieram — pode ser texto bagunçado, mensagem de WhatsApp, lista sem formatação...\n\nExemplo:\n${EXAMPLE}`}
             value={text}
             onChange={(e) => setText(e.target.value)}
           />

@@ -3,17 +3,17 @@ import Image from "next/image";
 export default function Header() {
   return (
     <header className="bg-brand-primary border-b border-brand-dark/30 shadow-lg">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3">
+      <div className="w-full px-6 sm:px-8 py-3">
         <div className="flex items-center justify-between gap-4">
 
           {/* Logo Univás */}
           <div className="flex items-center gap-3">
-            <div className="relative h-10 w-36 flex-shrink-0">
+            <div className="relative h-12 w-44 flex-shrink-0 rounded-lg overflow-hidden opacity-90">
               <Image
                 src="/logo-univas.jpg"
                 alt="Logo Univás"
                 fill
-                className="object-contain object-left"
+                className="object-cover object-center"
               />
             </div>
           </div>

@@ -52,7 +52,24 @@ seguindo exatamente esta estrutura:
 
 Preencha todos os campos que o usuário mencionar. Para campos não mencionados, omita-os ou use string vazia.
 Se o usuário mencionar tecnologias, adicione-as em skills.
-Crie um summary profissional e impactante baseado nas informações fornecidas.
+
+INSTRUÇÕES ESPECÍFICAS PARA O CAMPO "summary" (Objetivo Profissional):
+Sua tarefa é criar o campo "summary" usando linguagem simples, direta, profissional e adequada para processos seletivos. O objetivo deve ser curto, específico e sem linguagem sensacionalista.
+Regras obrigatórias:
+1. Não invente informações;
+2. Não use linguagem sensacionalista, rebuscada ou genérica;
+3. Não use frases longas;
+4. Não escreva em primeira pessoa;
+5. Não diga que a pessoa é especialista se ainda está em formação;
+6. Não transforme o objetivo em resumo profissional;
+7. Não coloque várias competências no objetivo;
+8. Use apenas UMA frase;
+9. Priorize estruturas simples: "Estagiar na área de [área], com foco em [atividades]", "Atuar na área de...", "Ingressar na área de...";
+10. Se for estágio, comece com "Estagiar na área de"; se for primeiro emprego, use "Atuar" ou "Ingressar";
+11. Se houver vaga específica, adapte o objetivo para essa vaga;
+12. Se houver subáreas de interesse, use apenas as mais importantes;
+13. NUNCA use expressões como "profissional altamente qualificado", "sólida experiência", "apaixonado por", "em busca de crescimento", "contribuir para o sucesso" ou "agregar valor".
+
 RETORNE APENAS O JSON, SEM MAIS NADA.`;
 
 export async function POST(req: Request) {

@@ -45,7 +45,7 @@ export default function GeradorPage() {
             <div>
               <h2 className="text-xl font-bold mb-1">Gerador de Currículo com IA Gratuita</h2>
               <p className="text-white/80 text-sm leading-relaxed">
-                Preencha as informações do aluno — de qualquer jeito — e a IA organiza,
+                Preencha as informações — de qualquer jeito — e a IA organiza,
                 estrutura e gera um currículo profissional. Edite na tela e baixe em PDF ou DOCX.
               </p>
             </div>
@@ -79,7 +79,7 @@ export default function GeradorPage() {
           <div className="w-7 h-7 bg-brand-primary/10 rounded-lg flex items-center justify-center">
             <Sparkles className="w-4 h-4 text-brand-primary" />
           </div>
-          Informações do Aluno
+          Informações
         </h3>
         <StudentForm onSubmit={handleGenerate} loading={loading} />
       </div>
