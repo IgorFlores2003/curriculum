@@ -188,19 +188,19 @@ export default function CompetenciasPage() {
               <CheckCircle className="w-4 h-4 text-green-400" />
               Versão Pronta para o Currículo
             </h4>
-            <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 pr-12">
+            <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 pr-16 relative">
               <p className="text-sm font-medium leading-relaxed text-slate-300">
                 {result.resumeVersion}
               </p>
+              <button
+                onClick={handleCopy}
+                className="absolute right-3 top-3 p-2 bg-brand-primary hover:bg-brand-light text-white rounded-lg transition-colors shadow-md group"
+                title="Copiar texto"
+              >
+                {copied ? <CheckCircle className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              </button>
+              {copied && <span className="absolute right-14 top-4 text-xs text-brand-light font-bold">Copiado!</span>}
             </div>
-            <button
-              onClick={handleCopy}
-              className="absolute right-10 bottom-10 p-2 bg-brand-primary hover:bg-brand-light text-white rounded-lg transition-colors shadow-md group"
-              title="Copiar texto"
-            >
-              {copied ? <CheckCircle className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-            </button>
-            {copied && <span className="absolute right-24 bottom-11 text-xs text-brand-light font-bold">Copiado!</span>}
             
             {/* Análise */}
             <div className="mt-5 border-t border-slate-700/50 pt-4">

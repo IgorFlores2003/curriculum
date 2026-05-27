@@ -64,7 +64,7 @@ export default function GeradorPage() {
             { n: "4", label: "Baixe PDF ou DOCX" },
           ].map((s) => (
             <div key={s.n} className="bg-white/10 rounded-xl px-3 py-2.5 flex items-center gap-2">
-              <span className="w-6 h-6 bg-brand-gold text-white text-xs font-black rounded-full flex items-center justify-center flex-shrink-0">
+              <span className="w-6 h-6 bg-white/20 text-white text-xs font-black rounded-full flex items-center justify-center flex-shrink-0">
                 {s.n}
               </span>
               <span className="text-white/80 text-xs">{s.label}</span>

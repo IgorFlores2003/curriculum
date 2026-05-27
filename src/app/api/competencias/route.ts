@@ -31,8 +31,8 @@ Soft skills são habilidades comportamentais observáveis a partir das experiên
 RETORNO EM JSON OBRIGATÓRIO:
 Você DEVE retornar APENAS um objeto JSON válido seguindo exatamente esta estrutura:
 {
-  "hardSkills": ["Lista de 4 a 8 hard skills que tenham relação direta com as informações"],
-  "softSkills": ["Lista de 4 a 8 soft skills coerentes com as atividades informadas"],
+  "hardSkills": ["Lista de 10 a 20 hard skills que tenham relação direta com as informações"],
+  "softSkills": ["Lista de 10 a 20 soft skills coerentes com as atividades informadas"],
   "suggestions": ["Lista de habilidades que podem fazer sentido pelo curso/área, mas que precisam ser confirmadas antes de entrar no currículo"],
   "resumeVersion": "Versão compacta, em linha única, com as principais competências. Ex: 'Competências: atendimento ao público, organização de documentos, comunicação clara, trabalho em equipe.'",
   "analysis": "Explicação rápida em poucas linhas de por que essas competências combinam com o curso, período e experiências informadas."

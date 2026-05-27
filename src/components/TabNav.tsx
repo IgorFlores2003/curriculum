@@ -1,6 +1,6 @@
-import { Compass, Sparkles, ListChecks } from "lucide-react";
+import { Compass, Sparkles, ListChecks, TerminalSquare } from "lucide-react";
 
-type Tab = "orientacao" | "gerador" | "competencias";
+type Tab = "orientacao" | "gerador" | "competencias" | "prompts";
 
 interface TabNavProps {
   active: Tab;
@@ -26,6 +26,12 @@ export default function TabNav({ active, onChange }: TabNavProps) {
       label: "Competências",
       Icon: ListChecks,
       desc: "Mapeamento de hard e soft skills",
+    },
+    {
+      id: "prompts" as Tab,
+      label: "Prompts",
+      Icon: TerminalSquare,
+      desc: "Biblioteca de comandos para IA",
     },
   ];
 

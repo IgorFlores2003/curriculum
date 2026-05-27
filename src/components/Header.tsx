@@ -8,7 +8,7 @@ export default function Header() {
 
           {/* Logo Univás */}
           <div className="flex items-center gap-3">
-            <div className="relative h-12 w-44 flex-shrink-0 rounded-lg overflow-hidden opacity-90">
+            <div className="relative h-9 w-32 sm:h-12 sm:w-44 flex-shrink-0 rounded-lg overflow-hidden opacity-90">
               <Image
                 src="/logo-univas.jpg"
                 alt="Logo Univás"
@@ -45,8 +45,8 @@ export default function Header() {
         </div>
 
         {/* Mobile title */}
-        <div className="text-center mt-2 sm:hidden">
-          <h1 className="text-white font-bold text-sm">
+        <div className="text-center mt-3 sm:hidden">
+          <h1 className="text-white font-bold text-xs leading-snug opacity-90">
             Orientação Profissional & Currículos
           </h1>
         </div>
